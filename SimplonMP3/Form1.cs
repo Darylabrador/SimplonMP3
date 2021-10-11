@@ -21,5 +21,15 @@ namespace SimplonMP3
         {
 
         }
+
+        private void songTitle_click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void songArtiste_click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
