@@ -87,7 +87,7 @@ namespace SimplonMP3
             this.songArtiste.AutoSize = true;
             this.songArtiste.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.songArtiste.ForeColor = System.Drawing.Color.White;
-            this.songArtiste.Location = new System.Drawing.Point(27, 59);
+            this.songArtiste.Location = new System.Drawing.Point(27, 57);
             this.songArtiste.Name = "songArtiste";
             this.songArtiste.Size = new System.Drawing.Size(71, 25);
             this.songArtiste.TabIndex = 9;
@@ -99,7 +99,7 @@ namespace SimplonMP3
             this.songTitle.AutoSize = true;
             this.songTitle.Font = new System.Drawing.Font("Segoe UI", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.songTitle.ForeColor = System.Drawing.Color.White;
-            this.songTitle.Location = new System.Drawing.Point(25, 17);
+            this.songTitle.Location = new System.Drawing.Point(25, 14);
             this.songTitle.Name = "songTitle";
             this.songTitle.Size = new System.Drawing.Size(211, 36);
             this.songTitle.TabIndex = 8;

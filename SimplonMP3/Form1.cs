@@ -19,7 +19,7 @@ namespace SimplonMP3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Console.WriteLine("loading");
         }
 
         private void songTitle_click(object sender, EventArgs e)
