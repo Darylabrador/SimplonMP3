@@ -15,15 +15,16 @@ namespace SimplonMP3
         private bool dragging = false;
         private Point startPoint = new Point(0, 0);
         private RecursiveFileSearch search = new RecursiveFileSearch();
-
+        List<Mp3File> files = new List<Mp3File>();
         public Form1()
         {
-            InitializeComponent();
+            files = search.Main();
+            InitializeComponent(files);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // List<Mp3File> files = search.Main();
+            
         }
 
         private void songTitle_click(object sender, EventArgs e)
@@ -43,14 +44,12 @@ namespace SimplonMP3
 
         private void bigScreen_click(object sender, EventArgs e)
         {
-            // System.Diagnostics.Debug.WriteLine("big screen handler");
             // if (this.WindowState == FormWindowState.Normal) this.WindowState = FormWindowState.Maximized;
             // else this.WindowState = FormWindowState.Normal;
         }
 
         private void reduceScreen_click(object sender, EventArgs e)
         {
-            // System.Diagnostics.Debug.WriteLine("reduce screen handler");
             this.WindowState = FormWindowState.Minimized;
         }
 
@@ -74,9 +73,9 @@ namespace SimplonMP3
             }
         }
 
-        private void syncSongs(object sender, EventArgs e)
+        private void Form1_Load_1(object sender, EventArgs e)
         {
-            search.Main();
+
         }
     }
 }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Data;
+using System.IO;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace SimplonMP3
 {
@@ -11,6 +14,12 @@ namespace SimplonMP3
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private List<Mp3File> mp3ListFiles = new List<Mp3File>();
+        private Mp3File selectedSong = null;
+        private String execPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+
+        private String titreMorceau   = "Titre du morceau";
+        // private String artisteMorceau = "Artiste";
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -27,12 +36,34 @@ namespace SimplonMP3
 
         private void mouseEnterImage_closeApp(object sender, System.EventArgs  e)
         {
-            this.closeApp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
+            this.closeApp.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\close_button_active.png");
         }
 
         private void mouseLeaveImage_closeApp(object sender, System.EventArgs e)
         {
-            this.closeApp.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.closeApp.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\close_button.png");
+        }
+
+        private void syncSongs(object sender, EventArgs e)
+        {
+            this.songTitle.Text = "Titre du morceau";
+            this.songListContainer.SelectedIndex = 0;
+            mp3ListFiles = null;
+            mp3ListFiles = search.Main();
+        }
+
+        private void songListContainer_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if(selectedSong != null)
+            {
+                selectedSong.stopPlayer();
+            }
+
+            int indexVal = this.songListContainer.SelectedIndex;
+            selectedSong = mp3ListFiles[indexVal];
+            titreMorceau = selectedSong.Name;
+            this.songTitle.Text = titreMorceau;
+            selectedSong.startPlayer();
         }
 
         #region Windows Form Designer generated code
@@ -41,9 +72,9 @@ namespace SimplonMP3
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        private void InitializeComponent(List<Mp3File> files)
         {
-            List<Mp3File> files = search.Main();
+            mp3ListFiles = files;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.appTitle = new System.Windows.Forms.Label();
             this.TitleBar = new System.Windows.Forms.Panel();
@@ -55,7 +86,7 @@ namespace SimplonMP3
             this.songArtiste = new System.Windows.Forms.Label();
             this.songTitle = new System.Windows.Forms.Label();
             this.musicContainer = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.songListContainer = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.artisteFilterContainer = new System.Windows.Forms.Panel();
             this.songFilterContainer = new System.Windows.Forms.Panel();
@@ -105,7 +136,7 @@ namespace SimplonMP3
             this.reduceScreenButton.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.reduceScreenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.reduceScreenButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.reduceScreenButton.Image = ((System.Drawing.Image)(resources.GetObject("reduceScreenButton.Image")));
+            this.reduceScreenButton.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\reduce_button.png");
             this.reduceScreenButton.Location = new System.Drawing.Point(1014, 23);
             this.reduceScreenButton.Name = "reduceScreenButton";
             this.reduceScreenButton.Padding = new System.Windows.Forms.Padding(2);
@@ -120,7 +151,7 @@ namespace SimplonMP3
             this.bigScreenButton.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bigScreenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.bigScreenButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.bigScreenButton.Image = ((System.Drawing.Image)(resources.GetObject("bigScreenButton.Image")));
+            this.bigScreenButton.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\big_screen_button.png");
             this.bigScreenButton.Location = new System.Drawing.Point(1051, 14);
             this.bigScreenButton.Name = "bigScreenButton";
             this.bigScreenButton.Padding = new System.Windows.Forms.Padding(2);
@@ -135,7 +166,7 @@ namespace SimplonMP3
             this.closeApp.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.closeApp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.closeApp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.closeApp.Image = ((System.Drawing.Image)(resources.GetObject("closeApp.Image")));
+            this.closeApp.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\close_button.png");
             this.closeApp.Location = new System.Drawing.Point(1091, 14);
             this.closeApp.Name = "closeApp";
             this.closeApp.Padding = new System.Windows.Forms.Padding(2);
@@ -172,7 +203,7 @@ namespace SimplonMP3
             // songArtiste
             // 
             this.songArtiste.AutoSize = true;
-            this.songArtiste.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.songArtiste.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.songArtiste.ForeColor = System.Drawing.Color.White;
             this.songArtiste.Location = new System.Drawing.Point(27, 57);
             this.songArtiste.Name = "songArtiste";
@@ -184,39 +215,40 @@ namespace SimplonMP3
             // songTitle
             // 
             this.songTitle.AutoSize = true;
-            this.songTitle.Font = new System.Drawing.Font("Segoe UI", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.songTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.songTitle.ForeColor = System.Drawing.Color.White;
             this.songTitle.Location = new System.Drawing.Point(25, 14);
             this.songTitle.Name = "songTitle";
             this.songTitle.Size = new System.Drawing.Size(211, 36);
             this.songTitle.TabIndex = 8;
-            this.songTitle.Text = "Titre du morceau";
+            this.songTitle.Text = titreMorceau;
             this.songTitle.Click += new System.EventHandler(this.songTitle_click);
             // 
             // musicContainer
             // 
             this.musicContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.musicContainer.Controls.Add(this.listBox1);
+            this.musicContainer.Controls.Add(this.songListContainer);
             this.musicContainer.Controls.Add(this.panel1);
             this.musicContainer.Location = new System.Drawing.Point(25, 132);
             this.musicContainer.Name = "musicContainer";
             this.musicContainer.Size = new System.Drawing.Size(1087, 456);
             this.musicContainer.TabIndex = 7;
             // 
-            // listBox1
+            // songListContainer
             // 
-            this.listBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox1.DataSource = files;
-            this.listBox1.DisplayMember = "Name";
-            this.listBox1.ForeColor = System.Drawing.Color.White;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(17, 77);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(1051, 345);
-            this.listBox1.TabIndex = 1;
-            this.listBox1.ValueMember = "Name";
+            this.songListContainer.DataSource = files;
+            this.songListContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.songListContainer.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.songListContainer.DisplayMember = "Name";
+            this.songListContainer.ForeColor = System.Drawing.Color.White;
+            this.songListContainer.FormattingEnabled = true;
+            this.songListContainer.ItemHeight = 15;
+            this.songListContainer.Location = new System.Drawing.Point(17, 77);
+            this.songListContainer.Name = "songListContainer";
+            this.songListContainer.Size = new System.Drawing.Size(1051, 345);
+            this.songListContainer.TabIndex = 1;
+            this.songListContainer.ValueMember = "Name";
+            this.songListContainer.SelectedValueChanged += new System.EventHandler(this.songListContainer_SelectedValueChanged);
             // 
             // panel1
             // 
@@ -308,7 +340,7 @@ namespace SimplonMP3
         private System.Windows.Forms.Panel songFilterContainer;
         private System.Windows.Forms.PictureBox syncButton;
         private System.Windows.Forms.Panel panel1;
-        private ListBox listBox1;
+        private ListBox songListContainer;
     }
 }
 

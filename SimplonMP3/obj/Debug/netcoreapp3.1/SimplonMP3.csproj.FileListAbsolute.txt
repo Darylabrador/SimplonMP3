@@ -15,3 +15,6 @@ C:\xampp\htdocs\Simplon\DotNet\SimplonMP3\SimplonMP3\obj\Debug\netcoreapp3.1\Sim
 C:\xampp\htdocs\Simplon\DotNet\SimplonMP3\SimplonMP3\obj\Debug\netcoreapp3.1\SimplonMP3.pdb
 C:\xampp\htdocs\Simplon\DotNet\SimplonMP3\SimplonMP3\obj\Debug\netcoreapp3.1\SimplonMP3.genruntimeconfig.cache
 C:\xampp\htdocs\Simplon\DotNet\SimplonMP3\SimplonMP3\obj\Debug\netcoreapp3.1\SimplonMP3.Properties.Resources.resources
+C:\xampp\htdocs\Simplon\DotNet\SimplonMP3\SimplonMP3\bin\Debug\netcoreapp3.1\Interop.WMPLib.dll
+C:\xampp\htdocs\Simplon\DotNet\SimplonMP3\SimplonMP3\obj\Debug\netcoreapp3.1\Interop.WMPLib.dll
+C:\xampp\htdocs\Simplon\DotNet\SimplonMP3\SimplonMP3\obj\Debug\netcoreapp3.1\SimplonMP3.csproj.ResolveComReference.cache
