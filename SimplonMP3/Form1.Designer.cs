@@ -1,4 +1,8 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System.Data;
+
 namespace SimplonMP3
 {
     partial class Form1
@@ -39,6 +43,7 @@ namespace SimplonMP3
         /// </summary>
         private void InitializeComponent()
         {
+            List<Mp3File> files = search.Main();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.appTitle = new System.Windows.Forms.Label();
             this.TitleBar = new System.Windows.Forms.Panel();
@@ -50,6 +55,8 @@ namespace SimplonMP3
             this.songArtiste = new System.Windows.Forms.Label();
             this.songTitle = new System.Windows.Forms.Label();
             this.musicContainer = new System.Windows.Forms.Panel();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.artisteFilterContainer = new System.Windows.Forms.Panel();
             this.songFilterContainer = new System.Windows.Forms.Panel();
             this.syncButton = new System.Windows.Forms.PictureBox();
@@ -58,6 +65,7 @@ namespace SimplonMP3
             ((System.ComponentModel.ISupportInitialize)(this.bigScreenButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.closeApp)).BeginInit();
             this.bottomPlayer.SuspendLayout();
+            this.musicContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.syncButton)).BeginInit();
             this.SuspendLayout();
             // 
@@ -188,10 +196,35 @@ namespace SimplonMP3
             // musicContainer
             // 
             this.musicContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.musicContainer.Controls.Add(this.listBox1);
+            this.musicContainer.Controls.Add(this.panel1);
             this.musicContainer.Location = new System.Drawing.Point(25, 132);
             this.musicContainer.Name = "musicContainer";
             this.musicContainer.Size = new System.Drawing.Size(1087, 456);
             this.musicContainer.TabIndex = 7;
+            // 
+            // listBox1
+            // 
+            this.listBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listBox1.DataSource = files;
+            this.listBox1.DisplayMember = "Name";
+            this.listBox1.ForeColor = System.Drawing.Color.White;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 15;
+            this.listBox1.Location = new System.Drawing.Point(17, 77);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(1051, 345);
+            this.listBox1.TabIndex = 1;
+            this.listBox1.ValueMember = "Name";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Location = new System.Drawing.Point(17, 51);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1051, 3);
+            this.panel1.TabIndex = 0;
             // 
             // artisteFilterContainer
             // 
@@ -252,6 +285,7 @@ namespace SimplonMP3
             ((System.ComponentModel.ISupportInitialize)(this.closeApp)).EndInit();
             this.bottomPlayer.ResumeLayout(false);
             this.bottomPlayer.PerformLayout();
+            this.musicContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.syncButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -273,6 +307,8 @@ namespace SimplonMP3
         private System.Windows.Forms.Panel artisteFilterContainer;
         private System.Windows.Forms.Panel songFilterContainer;
         private System.Windows.Forms.PictureBox syncButton;
+        private System.Windows.Forms.Panel panel1;
+        private ListBox listBox1;
     }
 }
 

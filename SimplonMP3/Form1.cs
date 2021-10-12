@@ -23,8 +23,7 @@ namespace SimplonMP3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            List<Mp3File> files = search.Main();
-            files.ForEach(item => System.Diagnostics.Debug.WriteLine(item.Name));
+            // List<Mp3File> files = search.Main();
         }
 
         private void songTitle_click(object sender, EventArgs e)
