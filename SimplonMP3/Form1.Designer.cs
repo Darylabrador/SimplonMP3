@@ -100,9 +100,12 @@ namespace SimplonMP3
             }
             else
             {
-                wplayer.settings.setMode("loop", true);
                 isRepeat = true;
+                wplayer.settings.setMode("loop", true);
                 this.repeatSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\repeat_button_active.png");
+
+                isRandom = false;
+                this.randomSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\random_button.png");
             }
         }
 
@@ -116,6 +119,10 @@ namespace SimplonMP3
             {
                 isRandom = true;
                 this.randomSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\random_button_active.png");
+
+                isRepeat = false;
+                wplayer.settings.setMode("loop", false);
+                this.repeatSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\repeat_button.png");
             }
         }
 
