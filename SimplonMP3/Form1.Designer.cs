@@ -29,6 +29,8 @@ namespace SimplonMP3
         WMPLib.WindowsMediaPlayer wplayer = null;
         double time = 0.0;
 
+        private static System.Timers.Timer aTimer;
+
         /// <summary>
         ///  Clean up any resources being used.
         /// </summary>
@@ -82,9 +84,9 @@ namespace SimplonMP3
                 wplayer.controls.currentPosition = time;
             }
             wplayer.controls.play();
+            startTimer();
         }
 
-  
         public void pausePlayer()
         {
             wplayer.controls.pause();
@@ -246,8 +248,7 @@ namespace SimplonMP3
                     break;
 
                 case 3:    // Playing
-                    isReading = true;
-                    Debug.WriteLine(wplayer.currentMedia.durationString);
+                    isReading = true;  
                     this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bouton-pause.png");
                     break;
 
@@ -272,6 +273,7 @@ namespace SimplonMP3
                     } else
                     {
                         isReading = false;
+                        this.totalDuration.Text = "";
                     }
                     this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
                     break;
@@ -297,6 +299,30 @@ namespace SimplonMP3
             }
         }
 
+        public void startTimer()
+        {
+            // Set the timer to fire an event every second and start the timer.
+            aTimer = new System.Timers.Timer();
+            aTimer.Interval = 1000;
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
+
+        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            // Subtract the current position from the duration of the current media to get
+            // the time remaining. Use the Math.floor method to round the result down to the
+            // nearest whole number.
+            double t = Math.Floor(wplayer.currentMedia.duration - wplayer.controls.currentPosition);
+
+            // Display the time remaining in the current media.
+            String currentDuration = TimeSpan.FromMinutes(t).ToString();
+            this.totalDuration.Invoke(new MethodInvoker(delegate
+            {
+                this.totalDuration.Text = currentDuration;
+            }));
+        }
 
         #region Windows Form Designer generated code
 
@@ -329,6 +355,7 @@ namespace SimplonMP3
             this.prevSongBottom = new System.Windows.Forms.PictureBox();
             this.repeatSongBottom = new System.Windows.Forms.PictureBox();
             this.randomSongBottom = new System.Windows.Forms.PictureBox();
+            this.totalDuration = new System.Windows.Forms.Label();
             this.TitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reduceScreenButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bigScreenButton)).BeginInit();
@@ -434,6 +461,7 @@ namespace SimplonMP3
             this.bottomPlayer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bottomPlayer.Controls.Add(this.songArtiste);
             this.bottomPlayer.Controls.Add(this.songTitle);
+            this.bottomPlayer.Controls.Add(this.totalDuration);
             this.bottomPlayer.Controls.Add(this.playSongBottom);
             this.bottomPlayer.Controls.Add(this.prevSongBottom);
             this.bottomPlayer.Controls.Add(this.nextSongBottom);
@@ -443,6 +471,17 @@ namespace SimplonMP3
             this.bottomPlayer.Name = "bottomPlayer";
             this.bottomPlayer.Size = new System.Drawing.Size(1136, 101);
             this.bottomPlayer.TabIndex = 6;
+            // 
+            // totalDuration
+            // 
+            this.totalDuration.AutoSize = true;
+            this.totalDuration.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.totalDuration.ForeColor = System.Drawing.Color.White;
+            this.totalDuration.Location = new System.Drawing.Point(545, 75);
+            this.totalDuration.Name = "totalDuration";
+            this.totalDuration.Size = new System.Drawing.Size(71, 25);
+            this.totalDuration.TabIndex = 9;
+            this.totalDuration.Text = "";
             // 
             // playSongBottom
             // 
@@ -651,6 +690,7 @@ namespace SimplonMP3
         private System.Windows.Forms.Panel bottomPlayer;
         private System.Windows.Forms.Label songTitle;
         private System.Windows.Forms.Label songArtiste;
+        private System.Windows.Forms.Label totalDuration;
         private System.Windows.Forms.PictureBox closeApp;
         private System.Windows.Forms.PictureBox reduceScreenButton;
         private System.Windows.Forms.PictureBox bigScreenButton;
