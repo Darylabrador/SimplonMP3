@@ -45,8 +45,7 @@ namespace SimplonMP3
             foreach (System.IO.FileInfo fi in files)
             {
                 Mp3File File = new Mp3File();
-                File.Name = fi.Name;
-                File.Path = fi.FullName;
+                File.getProperties(fi.Name, fi.FullName);
                 fileList.Add(File);
             }
 

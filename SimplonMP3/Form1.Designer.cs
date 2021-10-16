@@ -42,16 +42,7 @@ namespace SimplonMP3
             base.Dispose(disposing);
         }
 
-        public void setRandomSong()
-        {
-            var rand = new Random();
-            int randIndex = rand.Next(mp3ListFiles.Count - 1);
-            selectedSong = mp3ListFiles[randIndex];
-            this.songListContainer.SelectedIndex = randIndex;
-            selectedSongIndex = randIndex;
-            titreMorceau = selectedSong.Name;
-            this.songTitle.Text = titreMorceau;
-        }
+
 
         private void mouseEnterImage_closeApp(object sender, System.EventArgs  e)
         {
@@ -70,6 +61,16 @@ namespace SimplonMP3
             mp3ListFiles = null;
             mp3ListFiles = search.Main();
         }
+
+        public void setRandomSong()
+        {
+            var rand = new Random();
+            int randIndex = rand.Next(mp3ListFiles.Count - 1);
+            selectedSong = mp3ListFiles[randIndex];
+            this.songListContainer.SelectedIndex = randIndex;
+            selectedSongIndex = randIndex;
+        }
+
         public void startPlayer()
         {
             wplayer = new WMPLib.WindowsMediaPlayer();
@@ -144,8 +145,19 @@ namespace SimplonMP3
             int indexVal = this.songListContainer.SelectedIndex;
             selectedSongIndex = indexVal;
             selectedSong = mp3ListFiles[indexVal];
-            titreMorceau = selectedSong.Name;
-            this.songTitle.Text = titreMorceau;
+            titreMorceau = selectedSong.Title;
+            artisteMorceau = selectedSong.Artiste;
+            this.songArtiste.Text = artisteMorceau;
+
+            if(titreMorceau == null)
+            {
+                this.songTitle.Text = selectedSong.Name;
+            }
+            else
+            {
+                this.songTitle.Text = titreMorceau;
+            }
+
             startPlayer();
             isReading = true;
         }
@@ -179,7 +191,7 @@ namespace SimplonMP3
                     selectedSongIndex = selectedSongIndex - 1;
                     this.songListContainer.SelectedIndex = selectedSongIndex;
                     selectedSong = mp3ListFiles[selectedSongIndex];
-                    titreMorceau = selectedSong.Name;
+                    titreMorceau = selectedSong.Title;
                     this.songTitle.Text = titreMorceau;
                 }
                 catch (ArgumentOutOfRangeException)
@@ -187,7 +199,7 @@ namespace SimplonMP3
                     selectedSongIndex = fileLength - 1;
                     selectedSong = mp3ListFiles[selectedSongIndex];
                     this.songListContainer.SelectedIndex = selectedSongIndex;
-                    titreMorceau = selectedSong.Name;
+                    titreMorceau = selectedSong.Title;
                     this.songTitle.Text = titreMorceau;
                 }
             }
@@ -204,19 +216,18 @@ namespace SimplonMP3
                     selectedSongIndex = selectedSongIndex + 1;
                     this.songListContainer.SelectedIndex = selectedSongIndex;
                     selectedSong = mp3ListFiles[selectedSongIndex];
-                    titreMorceau = selectedSong.Name;
+                    titreMorceau = selectedSong.Title;
                     this.songTitle.Text = titreMorceau;
                 } 
                 catch(ArgumentOutOfRangeException)
                 {
                     selectedSong = mp3ListFiles[0];
                     this.songListContainer.SelectedIndex = 0;
-                    titreMorceau = selectedSong.Name;
+                    titreMorceau = selectedSong.Title;
                     this.songTitle.Text = titreMorceau;   
                 }
             } 
         }
-
 
         public void player_PlayStateChange(int newState)
         {
@@ -236,6 +247,7 @@ namespace SimplonMP3
 
                 case 3:    // Playing
                     isReading = true;
+                    Debug.WriteLine(wplayer.currentMedia.durationString);
                     this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bouton-pause.png");
                     break;
 
