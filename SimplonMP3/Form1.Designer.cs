@@ -16,20 +16,6 @@ namespace SimplonMP3
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private List<Mp3File> mp3ListFiles = new List<Mp3File>();
-        private Mp3File selectedSong = null;
-        private int selectedSongIndex;
-        private String execPath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
-        private String titreMorceau = "Titre du morceau";
-        private Boolean isReading   = false;
-        private Boolean isRandom   = false;
-        private Boolean isRepeat = false;
-        private String artisteMorceau = "Artiste";
-        private int fileLength = 0;
-        WMPLib.WindowsMediaPlayer wplayer = null;
-        double time = 0.0;
-
-        private static System.Timers.Timer aTimer;
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -44,296 +30,14 @@ namespace SimplonMP3
             base.Dispose(disposing);
         }
 
-
-
-        private void mouseEnterImage_closeApp(object sender, System.EventArgs  e)
-        {
-            this.closeApp.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\close_button_active.png");
-        }
-
-        private void mouseLeaveImage_closeApp(object sender, System.EventArgs e)
-        {
-            this.closeApp.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\close_button.png");
-        }
-
-        private void syncSongs(object sender, EventArgs e)
-        {
-            this.songTitle.Text = "Titre du morceau";
-            this.songListContainer.SelectedIndex = 0;
-            mp3ListFiles = null;
-            mp3ListFiles = search.Main();
-        }
-
-        public void setRandomSong()
-        {
-            var rand = new Random();
-            int randIndex = rand.Next(mp3ListFiles.Count - 1);
-            selectedSong = mp3ListFiles[randIndex];
-            this.songListContainer.SelectedIndex = randIndex;
-            selectedSongIndex = randIndex;
-        }
-
-        public void startPlayer()
-        {
-            wplayer = new WMPLib.WindowsMediaPlayer();
-            wplayer.PlayStateChange += new WMPLib._WMPOCXEvents_PlayStateChangeEventHandler(player_PlayStateChange);
-            wplayer.settings.setMode("loop", false);
-            wplayer.URL = selectedSong.Path;
-            if (time != 0.0)
-            {
-                wplayer.controls.currentPosition = time;
-            }
-            wplayer.controls.play();
-            startTimer();
-        }
-
-        public void pausePlayer()
-        {
-            wplayer.controls.pause();
-            time = wplayer.controls.currentPosition;
-        }
-
-        public void repeatPlayer(object sender, EventArgs e)
-        {
-            if(isRepeat)
-            {
-                wplayer.settings.setMode("loop", false);
-                isRepeat = false;
-                this.repeatSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\repeat_button.png");
-            }
-            else
-            {
-                isRepeat = true;
-                wplayer.settings.setMode("loop", true);
-                this.repeatSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\repeat_button_active.png");
-
-                isRandom = false;
-                this.randomSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\random_button.png");
-            }
-        }
-
-        public void randomPlayer(object sender, EventArgs e)
-        {
-            if(isRandom)
-            {
-                isRandom = false;
-                this.randomSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\random_button.png");
-            } else
-            {
-                isRandom = true;
-                this.randomSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\random_button_active.png");
-
-                isRepeat = false;
-                wplayer.settings.setMode("loop", false);
-                this.repeatSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\repeat_button.png");
-            }
-        }
-
-        public void stopPlayer()
-        {
-            if (wplayer != null)
-            {
-                wplayer.close();
-            }
-        }
-
-        private void songListContainer_SelectedValueChanged(object sender, EventArgs e)
-        {
-            if(selectedSong != null)
-            {
-                stopPlayer();
-            }
-            selectedSong = null;
-            int indexVal = this.songListContainer.SelectedIndex;
-            selectedSongIndex = indexVal;
-            selectedSong = mp3ListFiles[indexVal];
-            titreMorceau = selectedSong.Title;
-            artisteMorceau = selectedSong.Artiste;
-            this.songArtiste.Text = artisteMorceau;
-
-            if(titreMorceau == null)
-            {
-                this.songTitle.Text = selectedSong.Name;
-            }
-            else
-            {
-                this.songTitle.Text = titreMorceau;
-            }
-
-            startPlayer();
-            isReading = true;
-        }
-
-
-        private void togglePlay(object sender, EventArgs e)
-        {
-            if(selectedSong != null)
-            {
-                pausePlayer();
-
-                if (isReading)
-                {
-                    isReading = false;
-                } else
-                {
-                    isReading = true;
-                    startPlayer();
-                }
-            }
-        }
-
-        private void prevHandler(object sender, EventArgs e)
-        {
-            if (selectedSong != null)
-            {
-                stopPlayer();
-
-                try
-                { 
-                    selectedSongIndex = selectedSongIndex - 1;
-                    this.songListContainer.SelectedIndex = selectedSongIndex;
-                    selectedSong = mp3ListFiles[selectedSongIndex];
-                    titreMorceau = selectedSong.Title;
-                    this.songTitle.Text = titreMorceau;
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    selectedSongIndex = fileLength - 1;
-                    selectedSong = mp3ListFiles[selectedSongIndex];
-                    this.songListContainer.SelectedIndex = selectedSongIndex;
-                    titreMorceau = selectedSong.Title;
-                    this.songTitle.Text = titreMorceau;
-                }
-            }
-        }
-
-        private void nextHandler(object sender, EventArgs e)
-        {
-            if (selectedSong != null)
-            {
-                stopPlayer();
-
-                try
-                {
-                    selectedSongIndex = selectedSongIndex + 1;
-                    this.songListContainer.SelectedIndex = selectedSongIndex;
-                    selectedSong = mp3ListFiles[selectedSongIndex];
-                    titreMorceau = selectedSong.Title;
-                    this.songTitle.Text = titreMorceau;
-                } 
-                catch(ArgumentOutOfRangeException)
-                {
-                    selectedSong = mp3ListFiles[0];
-                    this.songListContainer.SelectedIndex = 0;
-                    titreMorceau = selectedSong.Title;
-                    this.songTitle.Text = titreMorceau;   
-                }
-            } 
-        }
-
-        public void player_PlayStateChange(int newState)
-        {
-            switch (newState)
-            {
-                case 0:    // Undefined
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-
-                case 1:    // Stopped
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-
-                case 2:    // Paused
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-
-                case 3:    // Playing
-                    isReading = true;  
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bouton-pause.png");
-                    break;
-
-                case 4:    // ScanForward
-                    break;
-
-                case 5:    // ScanReverse
-                    break;
-
-                case 6:    // Buffering
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-
-                case 7:    // Waiting
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-
-                case 8:    // MediaEnded
-                    if(isRandom)
-                    {
-                        setRandomSong();
-                    } else
-                    {
-                        isReading = false;
-                        this.totalDuration.Text = "";
-                    }
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-
-                case 9:    // Transitioning
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-
-                case 10:   // Ready
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bouton-pause.png");
-                    break;
-
-                case 11:   // Reconnecting
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-
-                case 12:   // Last
-                    break;
-
-                default:
-                    this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
-                    break;
-            }
-        }
-
-        public void startTimer()
-        {
-            // Set the timer to fire an event every second and start the timer.
-            aTimer = new System.Timers.Timer();
-            aTimer.Interval = 1000;
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
-        }
-
-        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
-        {
-            // Subtract the current position from the duration of the current media to get
-            // the time remaining. Use the Math.floor method to round the result down to the
-            // nearest whole number.
-            double t = Math.Floor(wplayer.currentMedia.duration - wplayer.controls.currentPosition);
-
-            // Display the time remaining in the current media.
-            String currentDuration = TimeSpan.FromMinutes(t).ToString();
-            this.totalDuration.Invoke(new MethodInvoker(delegate
-            {
-                this.totalDuration.Text = currentDuration;
-            }));
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent(List<Mp3File> files)
+        private void InitializeComponent()
         {
-            mp3ListFiles = files;
-            fileLength = Int16.Parse(files.Count.ToString());
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.appTitle = new System.Windows.Forms.Label();
             this.TitleBar = new System.Windows.Forms.Panel();
@@ -568,7 +272,6 @@ namespace SimplonMP3
             this.songArtiste.Size = new System.Drawing.Size(71, 25);
             this.songArtiste.TabIndex = 9;
             this.songArtiste.Text = artisteMorceau;
-            this.songArtiste.Click += new System.EventHandler(this.songArtiste_click);
             // 
             // songTitle
             // 
@@ -580,7 +283,6 @@ namespace SimplonMP3
             this.songTitle.Size = new System.Drawing.Size(211, 36);
             this.songTitle.TabIndex = 8;
             this.songTitle.Text = titreMorceau;
-            this.songTitle.Click += new System.EventHandler(this.songTitle_click);
             // 
             // musicContainer
             // 
@@ -594,7 +296,6 @@ namespace SimplonMP3
             // 
             // songListContainer
             // 
-            this.songListContainer.DataSource = files;
             this.songListContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.songListContainer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.songListContainer.DisplayMember = "Name";

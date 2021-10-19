@@ -1,5 +1,4 @@
 using WMPLib;
-using System;
 
 namespace SimplonMP3
 {
@@ -9,7 +8,7 @@ namespace SimplonMP3
         public string Name { get; set; }
         public string Title { get; set; }
         public string Artiste { get; set; }
-        public double Duration { get; set; }
+        public string Duration { get; set; }
         public string Path { get; set; }
 
         WMPLib.WindowsMediaPlayer wplayer = null;
@@ -29,7 +28,7 @@ namespace SimplonMP3
                         Artiste = mediaInfo.getItemInfo(mediaInfo.getAttributeName(i)).ToString();
                         break;
                     case "Duration":
-                        Duration = mediaInfo.duration;
+                        Duration = mediaInfo.durationString;
                         break;
                     case "Title":
                         Title = mediaInfo.getItemInfo(mediaInfo.getAttributeName(i)).ToString();

@@ -12,29 +12,30 @@ namespace SimplonMP3
 {
     public partial class Form1 : Form
     {
-        private bool dragging = false;
+        private bool dragging   = false;
+        private bool firstStart = true;
         private Point startPoint = new Point(0, 0);
         private RecursiveFileSearch search = new RecursiveFileSearch();
-        List<Mp3File> files = new List<Mp3File>();
         public Form1()
         {
-            files = search.Main();
-            InitializeComponent(files);
+            InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            mp3ListFiles = search.Main();
+            fileLength = Int16.Parse(mp3ListFiles.Count.ToString());
+            this.songListContainer.DataSource = mp3ListFiles;
         }
 
-        private void songTitle_click(object sender, EventArgs e)
+        private void mouseEnterImage_closeApp(object sender, System.EventArgs  e)
         {
-
+            this.closeApp.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\close_button_active.png");
         }
 
-        private void songArtiste_click(object sender, EventArgs e)
+        private void mouseLeaveImage_closeApp(object sender, System.EventArgs e)
         {
-
+            this.closeApp.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\close_button.png");
         }
 
         private void closeApp_click(object sender, EventArgs e)
@@ -71,11 +72,6 @@ namespace SimplonMP3
                 Point p = PointToScreen(e.Location);
                 Location = new Point(p.X - this.startPoint.X, p.Y - this.startPoint.Y);
             }
-        }
-
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-
         }
     }
 }
