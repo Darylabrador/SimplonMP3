@@ -14,8 +14,9 @@ namespace SimplonMP3
     {
         private void songListContainer_SelectedValueChanged(object sender, EventArgs e)
         {
-            if(!firstStart) {
-                if(selectedSong != null)
+            if (!firstStart)
+            {
+                if (selectedSong != null)
                 {
                     stopPlayer();
                 }
@@ -27,7 +28,7 @@ namespace SimplonMP3
                 artisteMorceau = selectedSong.Artiste;
                 this.songArtiste.Text = artisteMorceau;
 
-                if(titreMorceau == null)
+                if (titreMorceau == null)
                 {
                     this.songTitle.Text = selectedSong.Name;
                 }
@@ -61,7 +62,7 @@ namespace SimplonMP3
                     break;
 
                 case 3:    // Playing
-                    isReading = true;  
+                    isReading = true;
                     this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bouton-pause.png");
                     break;
 
@@ -80,10 +81,11 @@ namespace SimplonMP3
                     break;
 
                 case 8:    // MediaEnded
-                    if(isRandom)
+                    if (isRandom)
                     {
                         setRandomSong();
-                    } else
+                    }
+                    else
                     {
                         isReading = false;
                         this.totalDuration.Text = "";
