@@ -60,6 +60,9 @@ namespace SimplonMP3
             this.repeatSongBottom = new System.Windows.Forms.PictureBox();
             this.randomSongBottom = new System.Windows.Forms.PictureBox();
             this.totalDuration = new System.Windows.Forms.Label();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
+            this.searchButton = new System.Windows.Forms.PictureBox();
+            this.searchLabel = new System.Windows.Forms.Label();
             this.TitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.reduceScreenButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bigScreenButton)).BeginInit();
@@ -320,18 +323,61 @@ namespace SimplonMP3
             // artisteFilterContainer
             // 
             this.artisteFilterContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
+            this.artisteFilterContainer.Controls.Add(this.searchLabel);
             this.artisteFilterContainer.Location = new System.Drawing.Point(584, 73);
             this.artisteFilterContainer.Name = "artisteFilterContainer";
             this.artisteFilterContainer.Size = new System.Drawing.Size(227, 39);
             this.artisteFilterContainer.TabIndex = 8;
             // 
+            // artisteFilterContainer
+            // 
+            this.searchLabel.AutoSize = true;
+            this.searchLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
+            this.searchLabel.ForeColor = System.Drawing.Color.White;
+            this.searchLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.searchLabel.Location = new System.Drawing.Point(660, 82);
+            this.searchLabel.Name = "searchLabel";
+            this.searchLabel.Size = new System.Drawing.Size(52, 21);
+            this.searchLabel.TabIndex = 2;
+            this.searchLabel.Text = "Filtrer par artiste";
+            // 
             // songFilterContainer
             // 
             this.songFilterContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
+            this.songFilterContainer.Controls.Add(this.searchTextBox);
+            this.songFilterContainer.Controls.Add(this.searchButton);
             this.songFilterContainer.Location = new System.Drawing.Point(832, 73);
             this.songFilterContainer.Name = "songFilterContainer";
             this.songFilterContainer.Size = new System.Drawing.Size(280, 39);
             this.songFilterContainer.TabIndex = 9;
+            // 
+            // searchTextBox
+            // 
+            this.searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.searchTextBox.AutoSize = false;
+            this.searchTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
+            this.searchTextBox.ForeColor = System.Drawing.Color.White;
+            this.searchTextBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.searchTextBox.Location = new System.Drawing.Point(840, 82);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(230, 25);
+            this.searchTextBox.TabIndex = 8;
+            this.searchTextBox.Text = searchText;
+            // 
+            // searchButton
+            // 
+            this.searchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
+            this.searchButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.searchButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.searchButton.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\search_button.png");
+            this.searchButton.Location = new System.Drawing.Point(1075, 78);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Padding = new System.Windows.Forms.Padding(2);
+            this.searchButton.Size = new System.Drawing.Size(30, 30);
+            this.searchButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.searchButton.TabIndex = 7;
+            this.searchButton.TabStop = false;
+            this.searchButton.Click += new System.EventHandler(this.searchAction);
             // 
             // syncButton
             // 
@@ -354,6 +400,9 @@ namespace SimplonMP3
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
             this.ClientSize = new System.Drawing.Size(1135, 709);
+            this.Controls.Add(this.searchLabel);
+            this.Controls.Add(this.searchTextBox);
+            this.Controls.Add(this.searchButton);
             this.Controls.Add(this.syncButton);
             this.Controls.Add(this.songFilterContainer);
             this.Controls.Add(this.artisteFilterContainer);
@@ -406,6 +455,9 @@ namespace SimplonMP3
         private System.Windows.Forms.PictureBox prevSongBottom;
         private System.Windows.Forms.PictureBox repeatSongBottom;
         private System.Windows.Forms.PictureBox randomSongBottom;
+        private System.Windows.Forms.TextBox searchTextBox;
+        private System.Windows.Forms.PictureBox searchButton;
+        private System.Windows.Forms.Label searchLabel;
     }
 }
 
