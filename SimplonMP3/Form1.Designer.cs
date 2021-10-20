@@ -39,6 +39,7 @@ namespace SimplonMP3
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.toggleButton = new ToggleButton();
             this.appTitle = new System.Windows.Forms.Label();
             this.TitleBar = new System.Windows.Forms.Panel();
             this.reduceScreenButton = new System.Windows.Forms.PictureBox();
@@ -324,10 +325,30 @@ namespace SimplonMP3
             // 
             this.artisteFilterContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
             this.artisteFilterContainer.Controls.Add(this.searchLabel);
+            this.artisteFilterContainer.Controls.Add(this.toggleButton);
             this.artisteFilterContainer.Location = new System.Drawing.Point(584, 73);
             this.artisteFilterContainer.Name = "artisteFilterContainer";
             this.artisteFilterContainer.Size = new System.Drawing.Size(227, 39);
             this.artisteFilterContainer.TabIndex = 8;
+            // 
+            // toggleButton
+            // 
+            this.toggleButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
+            this.toggleButton.BorderColor = System.Drawing.Color.White;
+            this.toggleButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.toggleButton.ForeColor = System.Drawing.Color.White;
+            this.toggleButton.IsOn = false;
+            this.toggleButton.Location = new System.Drawing.Point(600, 83);
+            this.toggleButton.Name = "toggleButton";
+            this.toggleButton.OffColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(80)))));
+            this.toggleButton.OffText = "";
+            this.toggleButton.OnColor = System.Drawing.Color.Black;
+            this.toggleButton.OnText = "";
+            this.toggleButton.Size = new System.Drawing.Size(70, 18);
+            this.toggleButton.TabIndex = 0;
+            this.toggleButton.Text = "";
+            this.toggleButton.TextEnabled = true;
+            this.toggleButton.Click += new System.EventHandler(this.toggleSearchArtiste);
             // 
             // artisteFilterContainer
             // 
@@ -400,6 +421,7 @@ namespace SimplonMP3
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(108)))), ((int)(((byte)(108)))));
             this.ClientSize = new System.Drawing.Size(1135, 709);
+            this.Controls.Add(this.toggleButton);
             this.Controls.Add(this.searchLabel);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.searchButton);
@@ -458,6 +480,7 @@ namespace SimplonMP3
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.PictureBox searchButton;
         private System.Windows.Forms.Label searchLabel;
+        private ToggleButton toggleButton;
     }
 }
 
