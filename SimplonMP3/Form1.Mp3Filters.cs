@@ -15,12 +15,12 @@ namespace SimplonMP3
         private String searchText = "Rechercher un morceau...";
         private Boolean isActiveArtisteFilter = false;
         private List<Mp3File> defaultMp3List = new List<Mp3File>();
-        private void reinitPlayList()
+
+        private void resetting()
         {
             titreMorceau = "Titre du morceau";
             artisteMorceau = "Artiste";
             this.totalDuration.Text = "";
-            defaultMp3List = mp3ListFiles;
             this.songListContainer.DataSource = defaultMp3List;
             stopPlayer();
             this.songTitle.Text = titreMorceau;
@@ -28,6 +28,12 @@ namespace SimplonMP3
             this.selectedSong = null;
             isReading = false;
             this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
+        }
+
+        private void reinitPlayList()
+        {
+            defaultMp3List = mp3ListFiles;
+            resetting();
         }
 
         private void searchAction(object sender, EventArgs e)
@@ -73,16 +79,7 @@ namespace SimplonMP3
                 defaultMp3List = mp3ListFiles.FindAll(element => element.Name.Contains(searchInfo) || element.Title.Contains(searchInfo));
             }
 
-            titreMorceau = "Titre du morceau";
-            artisteMorceau = "Artiste";
-            this.totalDuration.Text = "";
-            this.songListContainer.DataSource = defaultMp3List;
-            stopPlayer();
-            this.songTitle.Text = titreMorceau;
-            this.songArtiste.Text = artisteMorceau;
-            this.selectedSong = null;
-            isReading = false;
-            this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
+            resetting();
         }
     }
 }
