@@ -66,13 +66,23 @@ namespace SimplonMP3
         {
             if (isFilterActive)
             {
-                Debug.WriteLine("Recherche d'un artiste suivant : ");
+                defaultMp3List = mp3ListFiles.FindAll(element => element.Artiste.Contains(searchInfo));
             }
             else
             {
-                Debug.WriteLine("Recherche d'un morceau suivant : ");
+                defaultMp3List = mp3ListFiles.FindAll(element => element.Name.Contains(searchInfo) || element.Title.Contains(searchInfo));
             }
-            Debug.WriteLine(searchInfo);
+
+            titreMorceau = "Titre du morceau";
+            artisteMorceau = "Artiste";
+            this.totalDuration.Text = "";
+            this.songListContainer.DataSource = defaultMp3List;
+            stopPlayer();
+            this.songTitle.Text = titreMorceau;
+            this.songArtiste.Text = artisteMorceau;
+            this.selectedSong = null;
+            isReading = false;
+            this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
         }
     }
 }
