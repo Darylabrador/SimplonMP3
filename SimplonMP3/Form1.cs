@@ -12,10 +12,11 @@ namespace SimplonMP3
 {
     public partial class Form1 : Form
     {
-        private bool dragging   = false;
+        private bool dragging = false;
         private bool firstStart = true;
         private Point startPoint = new Point(0, 0);
         private RecursiveFileSearch search = new RecursiveFileSearch();
+
         public Form1()
         {
             InitializeComponent();
@@ -25,10 +26,28 @@ namespace SimplonMP3
         {
             mp3ListFiles = search.Main();
             fileLength = Int16.Parse(mp3ListFiles.Count.ToString());
-            this.songListContainer.DataSource = mp3ListFiles;
+            if (fileLength > 0)
+            {
+                mp3ListFiles.ForEach(song =>
+                {
+                    String Title, Artiste, Album, Duree, Action;
+                    Title = song.Name == null ? song.Name : song.Title;
+                    Artiste = song.Artiste == null ? "" : song.Artiste;
+                    Album = "";
+                    Duree = song.Duration;
+                    Action = "";
+                    this.songListContainer.Items.Add(new ListViewItem(new string[] { Title, Artiste, Album, Duree, Action }));
+                });
+
+                if (this.songListContainer.Items[0].Text.Length == 0)
+                {
+                    this.songListContainer.Items[0].Remove();
+                }
+            }
+
         }
 
-        private void mouseEnterImage_closeApp(object sender, System.EventArgs  e)
+        private void mouseEnterImage_closeApp(object sender, System.EventArgs e)
         {
             this.closeApp.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\close_button_active.png");
         }
@@ -72,6 +91,11 @@ namespace SimplonMP3
                 Point p = PointToScreen(e.Location);
                 Location = new Point(p.X - this.startPoint.X, p.Y - this.startPoint.Y);
             }
+        }
+
+        private void musicContainer_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

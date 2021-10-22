@@ -29,12 +29,41 @@ namespace SimplonMP3
 
         private void syncSongs(object sender, EventArgs e)
         {
+            titreMorceau = "Titre du morceau";
+            artisteMorceau = "Artiste";
+            this.totalDuration.Text = "";
+
             stopPlayer();
+            
+            this.songTitle.Text = titreMorceau;
+            this.songArtiste.Text = artisteMorceau;
             this.selectedSong = null;
-            this.songListContainer.SelectedIndex = 0;
-            mp3ListFiles = null;
+            isReading = false;
+
+            this.songListContainer.SelectedItems.Clear();
+            this.songListContainer.Items.Clear();
+
+            mp3ListFiles = new List<Mp3File>();
             mp3ListFiles = search.Main();
-            this.songListContainer.DataSource = mp3ListFiles;
+            fileLength = Int16.Parse(mp3ListFiles.Count.ToString());
+            if (fileLength > 0)
+            {
+                mp3ListFiles.ForEach(song =>
+                {
+                    String Title, Artiste, Album, Duree, Action;
+                    Title = song.Name == null ? song.Name : song.Title;
+                    Artiste = song.Artiste == null ? "" : song.Artiste;
+                    Album = "";
+                    Duree = song.Duration;
+                    Action = "";
+                    this.songListContainer.Items.Add(new ListViewItem(new string[] { Title, Artiste, Album, Duree, Action }));
+                });
+
+                 if (this.songListContainer.Items[0].Text.Length == 0) {
+                    this.songListContainer.Items[0].Remove();
+                }
+            }
+
             this.firstStart = true;
         }
 
@@ -129,7 +158,7 @@ namespace SimplonMP3
             var rand = new Random();
             int randIndex = rand.Next(mp3ListFiles.Count - 1);
             selectedSong = mp3ListFiles[randIndex];
-            this.songListContainer.SelectedIndex = randIndex;
+            this.songListContainer.Items[randIndex].Selected = true;
             selectedSongIndex = randIndex;
         }
 
@@ -142,7 +171,7 @@ namespace SimplonMP3
                 try
                 {
                     selectedSongIndex = selectedSongIndex - 1;
-                    this.songListContainer.SelectedIndex = selectedSongIndex;
+                    this.songListContainer.Items[selectedSongIndex].Selected = true;
                     selectedSong = mp3ListFiles[selectedSongIndex];
                     titreMorceau = selectedSong.Title;
                     this.songTitle.Text = titreMorceau;
@@ -151,7 +180,7 @@ namespace SimplonMP3
                 {
                     selectedSongIndex = fileLength - 1;
                     selectedSong = mp3ListFiles[selectedSongIndex];
-                    this.songListContainer.SelectedIndex = selectedSongIndex;
+                    this.songListContainer.Items[selectedSongIndex].Selected = true;
                     titreMorceau = selectedSong.Title;
                     this.songTitle.Text = titreMorceau;
                 }
@@ -167,7 +196,7 @@ namespace SimplonMP3
                 try
                 {
                     selectedSongIndex = selectedSongIndex + 1;
-                    this.songListContainer.SelectedIndex = selectedSongIndex;
+                    this.songListContainer.Items[selectedSongIndex].Selected = true;
                     selectedSong = mp3ListFiles[selectedSongIndex];
                     titreMorceau = selectedSong.Title;
                     this.songTitle.Text = titreMorceau;
@@ -175,7 +204,7 @@ namespace SimplonMP3
                 catch (ArgumentOutOfRangeException)
                 {
                     selectedSong = mp3ListFiles[0];
-                    this.songListContainer.SelectedIndex = 0;
+                    this.songListContainer.Items[0].Selected = true;
                     titreMorceau = selectedSong.Title;
                     this.songTitle.Text = titreMorceau;
                 }

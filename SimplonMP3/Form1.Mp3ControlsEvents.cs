@@ -12,7 +12,7 @@ namespace SimplonMP3
 {
     public partial class Form1
     {
-        private void songListContainer_SelectedValueChanged(object sender, EventArgs e)
+        private void songListContainer_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!firstStart)
             {
@@ -20,25 +20,29 @@ namespace SimplonMP3
                 {
                     stopPlayer();
                 }
-                selectedSong = null;
-                int indexVal = this.songListContainer.SelectedIndex;
-                selectedSongIndex = indexVal;
-                selectedSong = mp3ListFiles[indexVal];
-                titreMorceau = selectedSong.Title;
-                artisteMorceau = selectedSong.Artiste;
-                this.songArtiste.Text = artisteMorceau;
 
-                if (titreMorceau == null)
+                if(this.songListContainer.SelectedItems.Count > 0)
                 {
-                    this.songTitle.Text = selectedSong.Name;
-                }
-                else
-                {
-                    this.songTitle.Text = titreMorceau;
-                }
+                    selectedSong = null;
+                    int indexVal = this.songListContainer.SelectedItems[0].Index;
+                    selectedSongIndex = indexVal;
+                    selectedSong = mp3ListFiles[indexVal];
+                    titreMorceau = selectedSong.Title;
+                    artisteMorceau = selectedSong.Artiste;
+                    this.songArtiste.Text = artisteMorceau;
 
-                startPlayer();
-                isReading = true;
+                    if (titreMorceau == null)
+                    {
+                        this.songTitle.Text = selectedSong.Name;
+                    }
+                    else
+                    {
+                        this.songTitle.Text = titreMorceau;
+                    }
+
+                    startPlayer();
+                    isReading = true;
+                }
             }
 
             firstStart = false;

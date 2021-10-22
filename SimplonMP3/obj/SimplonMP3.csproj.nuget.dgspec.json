@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v2\\SimplonMP3\\SimplonMP3.csproj": {}
+    "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v3\\SimplonMP3\\SimplonMP3.csproj": {}
   },
   "projects": {
-    "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v2\\SimplonMP3\\SimplonMP3.csproj": {
+    "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v3\\SimplonMP3\\SimplonMP3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v2\\SimplonMP3\\SimplonMP3.csproj",
+        "projectUniqueName": "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v3\\SimplonMP3\\SimplonMP3.csproj",
         "projectName": "SimplonMP3",
-        "projectPath": "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v2\\SimplonMP3\\SimplonMP3.csproj",
+        "projectPath": "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v3\\SimplonMP3\\SimplonMP3.csproj",
         "packagesPath": "C:\\Users\\charl\\.nuget\\packages\\",
-        "outputPath": "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v2\\SimplonMP3\\obj\\",
+        "outputPath": "C:\\xampp\\htdocs\\Simplon\\DotNet\\SimplonMP3_v3\\SimplonMP3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\charl\\AppData\\Roaming\\NuGet\\NuGet.Config",
