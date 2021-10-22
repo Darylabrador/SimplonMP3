@@ -18,37 +18,8 @@ namespace SimplonMP3
 
         private void resetting()
         {
-            this.songListContainer.SelectedItems.Clear();
-            this.songListContainer.Items.Clear();
-            titreMorceau = "Titre du morceau";
-            artisteMorceau = "Artiste";
-            this.totalDuration.Text = "";
             stopPlayer();
-            this.songTitle.Text = titreMorceau;
-            this.songArtiste.Text = artisteMorceau;
-            this.selectedSong = null;
-            isReading = false;
-
-            fileLength = Int16.Parse(defaultMp3List.Count.ToString());
-            if (fileLength > 0)
-            {
-                defaultMp3List.ForEach(song =>
-                {
-                    String Title, Artiste, Album, Duree, Action;
-                    Title = song.Name == null ? song.Name : song.Title;
-                    Artiste = song.Artiste == null ? "" : song.Artiste;
-                    Album = "";
-                    Duree = song.Duration;
-                    Action = "";
-                    this.songListContainer.Items.Add(new ListViewItem(new string[] { Title, Artiste, Album, Duree, Action }));
-                });
-
-                 if (this.songListContainer.Items[0].Text.Length == 0)
-                {
-                    this.songListContainer.Items[0].Remove();
-                }
-            }
-
+            setListFiles(defaultMp3List, true);
             this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
         }
 

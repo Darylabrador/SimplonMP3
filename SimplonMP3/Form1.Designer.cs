@@ -403,7 +403,6 @@ namespace SimplonMP3
             this.musicContainer.Name = "musicContainer";
             this.musicContainer.Size = new System.Drawing.Size(1087, 456);
             this.musicContainer.TabIndex = 7;
-            this.musicContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.musicContainer_Paint);
             // 
             // songListContainer
             // 

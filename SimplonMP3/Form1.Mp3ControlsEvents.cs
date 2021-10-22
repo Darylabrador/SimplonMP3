@@ -14,38 +14,29 @@ namespace SimplonMP3
     {
         private void songListContainer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!firstStart)
+            stopPlayer();
+            if (this.songListContainer.SelectedItems.Count > 0)
             {
-                if (selectedSong != null)
+                selectedSong = null;
+                int indexVal = this.songListContainer.SelectedItems[0].Index;
+                selectedSongIndex = indexVal;
+                selectedSong = mp3ListFiles[indexVal];
+                titreMorceau = selectedSong.Title;
+                artisteMorceau = selectedSong.Artiste;
+                this.songArtiste.Text = artisteMorceau;
+
+                if (titreMorceau == null)
                 {
-                    stopPlayer();
+                    this.songTitle.Text = selectedSong.Name;
+                }
+                else
+                {
+                    this.songTitle.Text = titreMorceau;
                 }
 
-                if(this.songListContainer.SelectedItems.Count > 0)
-                {
-                    selectedSong = null;
-                    int indexVal = this.songListContainer.SelectedItems[0].Index;
-                    selectedSongIndex = indexVal;
-                    selectedSong = mp3ListFiles[indexVal];
-                    titreMorceau = selectedSong.Title;
-                    artisteMorceau = selectedSong.Artiste;
-                    this.songArtiste.Text = artisteMorceau;
-
-                    if (titreMorceau == null)
-                    {
-                        this.songTitle.Text = selectedSong.Name;
-                    }
-                    else
-                    {
-                        this.songTitle.Text = titreMorceau;
-                    }
-
-                    startPlayer();
-                    isReading = true;
-                }
+                startPlayer();
+                isReading = true;
             }
-
-            firstStart = false;
         }
 
 

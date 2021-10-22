@@ -29,56 +29,28 @@ namespace SimplonMP3
 
         private void syncSongs(object sender, EventArgs e)
         {
-            titreMorceau = "Titre du morceau";
-            artisteMorceau = "Artiste";
-            this.totalDuration.Text = "";
-
             stopPlayer();
-            
-            this.songTitle.Text = titreMorceau;
-            this.songArtiste.Text = artisteMorceau;
-            this.selectedSong = null;
-            isReading = false;
-
-            this.songListContainer.SelectedItems.Clear();
-            this.songListContainer.Items.Clear();
-
-            mp3ListFiles = new List<Mp3File>();
+            mp3ListFiles.Clear();
             mp3ListFiles = search.Main();
-            fileLength = Int16.Parse(mp3ListFiles.Count.ToString());
-            if (fileLength > 0)
-            {
-                mp3ListFiles.ForEach(song =>
-                {
-                    String Title, Artiste, Album, Duree, Action;
-                    Title = song.Name == null ? song.Name : song.Title;
-                    Artiste = song.Artiste == null ? "" : song.Artiste;
-                    Album = "";
-                    Duree = song.Duration;
-                    Action = "";
-                    this.songListContainer.Items.Add(new ListViewItem(new string[] { Title, Artiste, Album, Duree, Action }));
-                });
-
-                 if (this.songListContainer.Items[0].Text.Length == 0) {
-                    this.songListContainer.Items[0].Remove();
-                }
-            }
-
-            this.firstStart = true;
+            setListFiles(mp3ListFiles, true);
         }
 
         public void startPlayer()
         {
+
             wplayer = new WMPLib.WindowsMediaPlayer();
             wplayer.PlayStateChange += new WMPLib._WMPOCXEvents_PlayStateChangeEventHandler(player_PlayStateChange);
             wplayer.settings.setMode("loop", false);
             wplayer.URL = selectedSong.Path;
+
             if (time != 0.0)
             {
                 wplayer.controls.currentPosition = time;
             }
+
             wplayer.controls.play();
             startTimer();
+
         }
 
         public void pausePlayer()
@@ -170,19 +142,11 @@ namespace SimplonMP3
 
                 try
                 {
-                    selectedSongIndex = selectedSongIndex - 1;
-                    this.songListContainer.Items[selectedSongIndex].Selected = true;
-                    selectedSong = mp3ListFiles[selectedSongIndex];
-                    titreMorceau = selectedSong.Title;
-                    this.songTitle.Text = titreMorceau;
+                    setPrevValues(selectedSongIndex);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    selectedSongIndex = fileLength - 1;
-                    selectedSong = mp3ListFiles[selectedSongIndex];
-                    this.songListContainer.Items[selectedSongIndex].Selected = true;
-                    titreMorceau = selectedSong.Title;
-                    this.songTitle.Text = titreMorceau;
+                    setPrevValues(fileLength);
                 }
             }
         }
@@ -195,25 +159,17 @@ namespace SimplonMP3
 
                 try
                 {
-                    selectedSongIndex = selectedSongIndex + 1;
-                    this.songListContainer.Items[selectedSongIndex].Selected = true;
-                    selectedSong = mp3ListFiles[selectedSongIndex];
-                    titreMorceau = selectedSong.Title;
-                    this.songTitle.Text = titreMorceau;
+                    setNexValues(selectedSongIndex, false);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    selectedSong = mp3ListFiles[0];
-                    this.songListContainer.Items[0].Selected = true;
-                    titreMorceau = selectedSong.Title;
-                    this.songTitle.Text = titreMorceau;
+                    setNexValues(selectedSongIndex, true);
                 }
             }
         }
 
         public void startTimer()
         {
-            this.totalDuration.Text = "";
             aTimer = new System.Timers.Timer();
             aTimer.Interval = 1000;
             aTimer.Elapsed += OnTimedEvent;
@@ -223,12 +179,20 @@ namespace SimplonMP3
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            double t = Math.Floor(wplayer.currentMedia.duration - wplayer.controls.currentPosition);
-            String currentDuration = TimeSpan.FromMinutes(t).ToString();
-            this.totalDuration.Invoke(new MethodInvoker(delegate
+            try
             {
-                this.totalDuration.Text = currentDuration;
-            }));
+                double t = Math.Floor(wplayer.currentMedia.duration - wplayer.controls.currentPosition);
+                String currentDuration = TimeSpan.FromMinutes(t).ToString();
+                this.totalDuration.Invoke(new MethodInvoker(delegate
+                {
+                    this.totalDuration.Text = currentDuration;
+                }));
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+
+            }
+
         }
     }
 }
