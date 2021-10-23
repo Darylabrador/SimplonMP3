@@ -18,6 +18,7 @@ namespace SimplonMP3
 
         private void resetting()
         {
+            this.totalDuration.Text = "";
             stopPlayer();
             setListFiles(defaultMp3List, true);
             this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
