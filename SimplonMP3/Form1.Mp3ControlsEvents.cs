@@ -76,7 +76,11 @@ namespace SimplonMP3
                     break;
 
                 case 8:    // MediaEnded
-                    if (isRandom)
+                    if (isRepeat && !isRandom)
+                    {
+                        startPlayer();
+                    }
+                    else if (!isRepeat && isRandom)
                     {
                         setRandomSong();
                     }
