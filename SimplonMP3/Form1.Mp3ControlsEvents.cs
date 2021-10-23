@@ -78,6 +78,7 @@ namespace SimplonMP3
                 case 8:    // MediaEnded
                     if (isRepeat && !isRandom)
                     {
+                        stopPlayer();
                         startPlayer();
                     }
                     else if (!isRepeat && isRandom)
