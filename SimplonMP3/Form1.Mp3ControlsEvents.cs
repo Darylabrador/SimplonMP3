@@ -83,7 +83,7 @@ namespace SimplonMP3
                     else
                     {
                         isReading = false;
-                        this.totalDuration.Text = "";
+                        stopPlayer();
                     }
                     this.playSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\bottom_play.png");
                     break;
