@@ -20,7 +20,15 @@ namespace SimplonMP3
                 selectedSong = null;
                 int indexVal = this.songListContainer.SelectedItems[0].Index;
                 selectedSongIndex = indexVal;
-                selectedSong = mp3ListFiles[indexVal];
+                if(defaultMp3List.Count > 0)
+                {
+                    selectedSong = defaultMp3List[indexVal];
+                } else if (mp3ListFiles.Count > 0)
+                {
+                    selectedSong = mp3ListFiles[indexVal];
+                }
+
+                
                 titreMorceau = selectedSong.Title;
                 artisteMorceau = selectedSong.Artiste;
                 this.songArtiste.Text = artisteMorceau;
