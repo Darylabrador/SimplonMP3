@@ -324,77 +324,7 @@ namespace SimplonMP3
             this.totalDuration.Name = "totalDuration";
             this.totalDuration.Size = new System.Drawing.Size(0, 15);
             this.totalDuration.TabIndex = 9;
-            // 
-            // playSongBottom
-            // 
-            this.playSongBottom.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.playSongBottom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.playSongBottom.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.playSongBottom.Location = new System.Drawing.Point(550, 35);
-            this.playSongBottom.Name = "playSongBottom";
-            this.playSongBottom.Padding = new System.Windows.Forms.Padding(2);
-            this.playSongBottom.Size = new System.Drawing.Size(40, 40);
-            this.playSongBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.playSongBottom.TabIndex = 7;
-            this.playSongBottom.TabStop = false;
-            this.playSongBottom.Click += new System.EventHandler(this.togglePlay);
-            // 
-            // prevSongBottom
-            // 
-            this.prevSongBottom.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.prevSongBottom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.prevSongBottom.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.prevSongBottom.Location = new System.Drawing.Point(500, 41);
-            this.prevSongBottom.Name = "prevSongBottom";
-            this.prevSongBottom.Padding = new System.Windows.Forms.Padding(2);
-            this.prevSongBottom.Size = new System.Drawing.Size(30, 30);
-            this.prevSongBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.prevSongBottom.TabIndex = 7;
-            this.prevSongBottom.TabStop = false;
-            this.prevSongBottom.Click += new System.EventHandler(this.prevHandler);
-            // 
-            // nextSongBottom
-            // 
-            this.nextSongBottom.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.nextSongBottom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.nextSongBottom.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.nextSongBottom.Location = new System.Drawing.Point(610, 41);
-            this.nextSongBottom.Name = "nextSongBottom";
-            this.nextSongBottom.Padding = new System.Windows.Forms.Padding(2);
-            this.nextSongBottom.Size = new System.Drawing.Size(30, 30);
-            this.nextSongBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.nextSongBottom.TabIndex = 7;
-            this.nextSongBottom.TabStop = false;
-            this.nextSongBottom.Click += new System.EventHandler(this.nextHandler);
-            // 
-            // repeatSongBottom
-            // 
-            this.repeatSongBottom.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.repeatSongBottom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.repeatSongBottom.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.repeatSongBottom.Location = new System.Drawing.Point(660, 43);
-            this.repeatSongBottom.Name = "repeatSongBottom";
-            this.repeatSongBottom.Padding = new System.Windows.Forms.Padding(2);
-            this.repeatSongBottom.Size = new System.Drawing.Size(25, 25);
-            this.repeatSongBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.repeatSongBottom.TabIndex = 7;
-            this.repeatSongBottom.TabStop = false;
-            this.repeatSongBottom.Click += new System.EventHandler(this.repeatPlayer);
-            // 
-            // randomSongBottom
-            // 
-            this.randomSongBottom.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.randomSongBottom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.randomSongBottom.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.randomSongBottom.Location = new System.Drawing.Point(450, 41);
-            this.randomSongBottom.Name = "randomSongBottom";
-            this.randomSongBottom.Padding = new System.Windows.Forms.Padding(2);
-            this.randomSongBottom.Size = new System.Drawing.Size(30, 30);
-            this.randomSongBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.randomSongBottom.TabIndex = 7;
-            this.randomSongBottom.TabStop = false;
-            this.randomSongBottom.Click += new System.EventHandler(this.randomPlayer);
-            // 
+            //
             // musicContainer
             // 
             this.musicContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));

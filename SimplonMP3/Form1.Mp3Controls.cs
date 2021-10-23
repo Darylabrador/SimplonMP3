@@ -37,7 +37,6 @@ namespace SimplonMP3
 
         public void startPlayer()
         {
-
             wplayer = new WMPLib.WindowsMediaPlayer();
             wplayer.PlayStateChange += new WMPLib._WMPOCXEvents_PlayStateChangeEventHandler(player_PlayStateChange);
             wplayer.settings.setMode("loop", false);
@@ -63,17 +62,16 @@ namespace SimplonMP3
         {
             if (selectedSong != null)
             {
-                pausePlayer();
 
                 if (isReading)
                 {
-                    isReading = false;
+                    pausePlayer();
                 }
                 else
                 {
-                    isReading = true;
                     startPlayer();
                 }
+                isReading = !isReading;
             }
         }
 
@@ -82,6 +80,7 @@ namespace SimplonMP3
             if (wplayer != null)
             {
                 this.totalDuration.Text = "";
+                this.time = 0.0;
                 wplayer.close();
             }
         }
