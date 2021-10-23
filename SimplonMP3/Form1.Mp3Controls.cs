@@ -38,6 +38,11 @@ namespace SimplonMP3
 
         public void startPlayer()
         {
+            if(aTimer != null) {
+                aTimer.Stop();
+                aTimer.Dispose();
+            }
+            
             wplayer = new WMPLib.WindowsMediaPlayer();
             wplayer.PlayStateChange += new WMPLib._WMPOCXEvents_PlayStateChangeEventHandler(player_PlayStateChange);
             wplayer.settings.setMode("loop", false);
