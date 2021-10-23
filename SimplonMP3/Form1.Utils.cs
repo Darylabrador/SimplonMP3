@@ -34,7 +34,7 @@ namespace SimplonMP3
                 listFiles.ForEach(song =>
                 {
                     String Title, Artiste, Album, Duree, Action;
-                    Title = song.Name == null ? song.Name : song.Title;
+                    Title = song.Title == null ? song.Name : song.Title;
                     Artiste = song.Artiste == null ? "" : song.Artiste;
                     Album = "";
                     Duree = song.Duration;
