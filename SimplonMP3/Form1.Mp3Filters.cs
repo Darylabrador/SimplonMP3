@@ -73,7 +73,7 @@ namespace SimplonMP3
             }
             else
             {
-                defaultMp3List = mp3ListFiles.FindAll(element => element.Title.Contains(searchInfo) || element.name.Contains(searchInfo));
+                defaultMp3List = mp3ListFiles.FindAll(element => element.Title.Contains(searchInfo) || element.Name.Contains(searchInfo));
             }
 
             resetting();
