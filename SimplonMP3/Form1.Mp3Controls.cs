@@ -96,17 +96,18 @@ namespace SimplonMP3
         {
             if (isRepeat)
             {
+                isRepeat = false;
                 wplayer.settings.setMode("loop", false);
                 this.repeatSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\repeat_button.png");
             }
             else
             {
+                isRepeat = true;
                 isRandom = false;
                 wplayer.settings.setMode("loop", true);
                 this.repeatSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\repeat_button_active.png");
                 this.randomSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\random_button.png");
             }
-            isRepeat = !isRepeat;
         }
 
 
@@ -114,17 +115,17 @@ namespace SimplonMP3
         {
             if (isRandom)
             {
+                isRandom = false;
                 this.randomSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\random_button.png");
             }
             else
             {
+                isRandom = true;
                 isRepeat = false;
                 wplayer.settings.setMode("loop", false);
                 this.randomSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\random_button_active.png");
                 this.repeatSongBottom.Image = System.Drawing.Image.FromFile(execPath + @"\assets\img\repeat_button.png");
             }
-
-            isRandom = !isRandom;
         }
 
         public void setRandomSong()
